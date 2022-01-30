@@ -6,7 +6,7 @@
      
       <div class="bg-body shadow-sx mx-auto" style="width: 80%; min-height: 300px; border-radius: 21px 21px 21px 21px;">
         <TrainingLobby v-if="!isStart" @start="onStart"/>
-        <TrainingStart v-if="isStart" @back="onBack"/>
+        <TrainingStart @fetchText="fetchText" v-bind:text="text" v-if="isStart" @back="onBack"/>
       </div>
     </div>
 </template>
@@ -14,6 +14,7 @@
 <script>
 import TrainingLobby from '@/components/TrainingLobby.vue'
 import TrainingStart from '@/components/TrainingStart.vue'
+import axios from 'axios'
 
 export default {
     components: {
@@ -23,6 +24,9 @@ export default {
     data () {
       return {
         isStart:false,
+        text:{},
+        n:null,
+        
       }
     },
     methods: {
@@ -33,9 +37,28 @@ export default {
       onBack() {
         this.isStart=false
       },
-      fetchText(n) {
-        console.log(n)
-      }
+       async fetchText(n) {
+        try {
+          const response = await axios.get(`https://fish-text.ru/get?format=text&number=${n}`)
+          this.text = this.wrap(response.data.text,n)
+        } catch (error) {
+          alert('ошибка ', error)
+        }
+      },
+      wrap(text,n) {
+        const arr=text.split('')
+        let newArr=[]
+        for (let i=0; i<arr.length;i++) {
+          newArr.push(`<span>${arr[i]}</span>`)
+        }
+        newArr=newArr.join('')
+        console.log(newArr)
+        return {
+          newArr,
+          n,
+        }
+      },
+      
     }
     
 }
