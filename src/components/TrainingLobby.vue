@@ -31,10 +31,7 @@ export default {
     },
     methods: {
         start(){           
-            this.$emit('start', {
-            rangeValue: this.rangeValue,
-            isStart: this.isStart,
-            })
+            this.$emit('start',  this.rangeValue)
         }
     }
 

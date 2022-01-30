@@ -28,9 +28,13 @@ export default {
     methods: {
       onStart(data) {
         this.isStart=true
+        this.fetchText(data)
       },
       onBack() {
         this.isStart=false
+      },
+      fetchText(n) {
+        console.log(n)
       }
     }
     
