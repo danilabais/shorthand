@@ -6,7 +6,7 @@
       <h3>00:00</h3>
       </div>
       <hr style="width:90%" class="m-auto">
-      <p class="text p-3" v-html="text.newArr">
+      <p ref="text" class="text p-3" v-html="text.newArr">
           
       </p>
   </div>
@@ -29,7 +29,13 @@ export default {
         fetchText() {
             this.$emit('fetchText', this.text.n)
             
+        },
+        press($event) {
+            console.log($event)
         }
+    },
+    mounted () {
+        window.addEventListener('keydown', (e)=> this.press(e))
     }
 }
 </script>
