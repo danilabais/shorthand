@@ -10,7 +10,7 @@
       </p>
       
        <div class="progress mb-3" style="height:35px">
-        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" v-bind:style="{width:progress +'%'}" aria-valuemin="0" aria-valuemax="100"><span>{{progress}}%</span></div>
+        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" v-bind:style="{width:progress +'%'}" aria-valuemin="0" aria-valuemax="100"><span>{{Math.floor(progress)}}%</span></div>
         </div>
         
   </div>
@@ -81,7 +81,7 @@ export default {
     },
     watch: {
         i: function(val) {
-            this.progress=Math.floor(val/this.$refs.text.childNodes.length*100)
+            this.progress=val/this.$refs.text.childNodes.length*100
         }
     },
     mounted () {
