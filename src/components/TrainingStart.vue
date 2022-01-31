@@ -3,13 +3,13 @@
       <div class="d-flex justify-content-around align-items-center p-1" >
       <button v-on:click="back" type="button" class="btn btn-lg btn-link">Вернуться назад</button>
       <button v-on:click="fetchText" type="button" onclick="blur()" class="btn btn-outline-secondary">Другой текст</button>
-      <h3>{{(i/time*60).toFixed()}}</h3>
+      <h3>{{ (i/time*60).toFixed()}}</h3>
       </div>
       <hr style="width:90%" class="m-auto">
       <p ref="text" class="text p-3" v-html="text.newArr">
       </p>
       
-       <div class="progress mb-3" style="height:35px">
+       <div class="progress mb-3" style="height:45px">
         <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" v-bind:style="{width:progress +'%'}" aria-valuemin="0" aria-valuemax="100"><span>{{Math.floor(progress)}}%</span></div>
         </div>
         
@@ -33,6 +33,9 @@ export default {
             progress:0,
             time: 0,
             interval:{},
+            mistakes:null,
+            
+            
         }
     },
     methods: {
@@ -58,7 +61,8 @@ export default {
                 }
             
                 if (this.i===this.$refs.text.childNodes.length) {
-                    console.log('кек')
+                    
+                    this.$emit('finish', [this.i,this.time,this.mistakes])
                 }
 
                 //отключение скролла на пробел
@@ -75,6 +79,8 @@ export default {
         setInt() {
            this.interval =  setInterval(() => {
                 this.time++
+               
+                
             }, 1000);
         }
         
@@ -84,6 +90,7 @@ export default {
             this.progress=val/this.$refs.text.childNodes.length*100
         }
     },
+    
     mounted () {
         this.window.addEventListener('keydown',  this.press)
     },
