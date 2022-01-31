@@ -1,14 +1,18 @@
 <template>
-  <div>
+  <div class="pb-5">
       <div class="d-flex justify-content-around align-items-center p-1" >
       <button v-on:click="back" type="button" class="btn btn-lg btn-link">Вернуться назад</button>
-      <button v-on:click="fetchText" type="button" class="btn btn-secondary">Другой текст</button>
-      <h3>00:00</h3>
+      <button v-on:click="fetchText" type="button" onclick="blur()" class="btn btn-outline-secondary">Другой текст</button>
+      <h3>00:00{{i}}</h3>
       </div>
       <hr style="width:90%" class="m-auto">
       <p ref="text" class="text p-3" v-html="text.newArr">
-          
       </p>
+      
+       <div class="progress mb-3" style="height:35px">
+        <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" v-bind:style="{width:progress +'%'}" aria-valuemin="0" aria-valuemax="100"><span>{{progress}}%</span></div>
+        </div>
+        
   </div>
   
 </template>
@@ -22,20 +26,59 @@ export default {
             required:true,
         }
     },
+    data() {
+        return {
+            window:window,
+            i:0,
+            progress:0,
+        }
+    },
     methods: {
         back() {
             this.$emit('back')
         },
         fetchText() {
             this.$emit('fetchText', this.text.n)
+            this.i=0
             
         },
-        press($event) {
-            console.log($event)
+        press(e) {
+          
+            if (e.key!=='Shift' && e.key!=='Tab' && e.key!=='Control' && e.key!=='Alt' && e.key!=='CapsLock' && e.key!=='Meta' && e.key!=='Backspace') {
+                if (this.$refs.text.childNodes[this.i].innerHTML===e.key) {
+                    this.$refs.text.childNodes[this.i].classList.add('true')
+                    this.i++
+                } else {
+                    this.mistakes++
+                     this.$refs.text.childNodes[this.i].classList.add('false')
+                }
+            
+                if (this.i===this.$refs.text.childNodes.length) {
+                    console.log('кек')
+                }
+
+                //отключение скролла на пробел
+                 if ( ( e.keycode || e.which ) == 32) {
+                    e.preventDefault();
+                }
+
+                //включить таймер
+                if (this.i==1) {
+                    this.setInt()
+                }
+             }
+        }
+    },
+    watch: {
+        i: function(val) {
+            this.progress=Math.floor(val/this.$refs.text.childNodes.length*100)
         }
     },
     mounted () {
-        window.addEventListener('keydown', (e)=> this.press(e))
+        this.window.addEventListener('keydown',  this.press)
+    },
+    beforeUnmount() {
+        this.window.removeEventListener('keydown',  this.press)
     }
 }
 </script>
@@ -44,5 +87,17 @@ export default {
 .text {
     font-size: 2rem;
     font-weight: bold;
+}
+    .false { 
+        color: red;
+    }
+.true {
+    color: green;
+}
+.btn:focus {
+  outline: none;
+}
+span {
+    font-size: 2rem;
 }
 </style>
