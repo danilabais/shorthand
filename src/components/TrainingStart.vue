@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-5">
+  <div class="">
       <div class="d-flex justify-content-around align-items-center p-1" >
       <button v-on:click="back" type="button" class="btn btn-lg btn-link">Вернуться назад</button>
       <button v-on:click="fetchText" type="button" onclick="blur()" class="btn btn-outline-secondary">Другой текст</button>
@@ -9,7 +9,7 @@
       <p ref="text" class="text p-3" v-html="text.newArr">
       </p>
       
-       <div class="progress mb-3" style="height:45px">
+       <div  class="progress bg-dark mb-3" style="height:45px; border-radius: 0px 0px 21px 21px">
         <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" v-bind:style="{width:progress +'%'}" aria-valuemin="0" aria-valuemax="100"><span>{{Math.floor(progress)}}%</span></div>
         </div>
         

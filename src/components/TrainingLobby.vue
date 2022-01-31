@@ -4,7 +4,7 @@
           <p class="lead">Выборано <span class="fw-bold">{{rangeValue}}</span> предложени{{caseWord}} в тексте</p>
           <input v-model="rangeValue" type="range" class="form-range mb-3" min="1" max="8" step="1"  style="width:30%;transform: scale(1.7)">
           <br>
-          <button v-on:click="start" type="button" class="btn btn-lg btn-outline-success mt-4">Начать тренировку</button>
+          <button v-on:click="start" type="button" class="btn btn-lg btn-outline-success mt-4 mb-5">Начать тренировку</button>
         </div>
 </template>
 

@@ -30,7 +30,7 @@ export default {
   display: flex;
 }
 p {
-  font-size: 4rem;
+  font-size: 4em;
 }
 
 

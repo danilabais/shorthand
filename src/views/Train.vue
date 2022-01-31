@@ -1,10 +1,10 @@
 <template>
- <div  class="bg-light  pt-3 px-3 pt-md-5 px-md-5 text-center" >
+ <div  class="bg-light  pt-3 px-3 pt-md-5 px-md-5 mb-4 text-center" >
      
         <h2 class="display-5">Тренировка скорописи.</h2>
         <p class="lead">Улучши свои показатели, и не забывай о технике!</p>
      
-      <div class="bg-body shadow-sx mx-auto" style="width: 80%; min-height: 300px; border-radius: 21px 21px 21px 21px;">
+      <div class="bg-body shadow-lg mx-auto " style="width: 80%; min-height: 200px; border-radius: 21px 21px 21px 21px;">
         <TrainingLobby  v-if="!isStart && !isFinish" @start="onStart"/>
         <TrainingStart @fetchText="fetchText" v-bind:text="text" v-if="isStart" @finish="finish" @back="onBack"/> 
         <TrainingFinish v-if="isFinish" v-bind:result="result" @back="onBackFromFinish"/>

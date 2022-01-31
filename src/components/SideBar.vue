@@ -9,12 +9,17 @@
     <ul class="nav nav-pills flex-column mb-auto">
       <li class="nav-item">
         <router-link to="/" class="nav-link text-white" aria-current="page">
-         
           Главная
         </router-link>
+      </li>
+      <li>
         <router-link to="/train" class="nav-link text-white" aria-current="page">
-          
           Тренировка
+        </router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/exam" class="nav-link text-white" aria-current="page">
+          Экзамен
         </router-link>
       </li>
       
