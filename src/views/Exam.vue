@@ -1,44 +1,79 @@
 <template>
   <div>
-      <div  class="bg-light  pt-3 px-3 pt-md-5 px-md-5 text-center">
-        <h2 class="display-5">Экзамен</h2>
-            <ul class="lead">
-                <li>
-                Нельзя выбрать количество предложений
-                </li>
-                <hr style="width:20%" class="m-auto">
-                <li>
-                Убраны лишнии визуальные элементы
-                </li>
-                <hr style="width:20%" class="m-auto">
-                <li>
-                Рекорды сохраняются
-                </li>
-                <hr style="width:20%" class="m-auto">
-                <li>
-                Максимальная концентрация
-                </li>
-                </ul>
-            <button v-on:click="start" type="button" class="btn btn-lg btn-outline-success mt-5 mb-5">Начать экзамен</button>
+      <div class="bg-body shadow-lg mx-auto mt-3 " style="width: 80%; min-height: 200px; border-radius: 21px 21px 21px 21px;">
+        <ExamLobby v-if="!isStart" v-on:startCounter="startCounter"/>
+        <Counter v-if="isStart && !isStartExam" v-on:exam="exam"/>
+        <ExamStart v-on:fetchText="repeat" v-bind:text="text" v-if="isStartExam"/>
+
+
         </div>
         
   </div>
 </template>
 
 <script>
-import TrainingStart from '@/components/TrainingStart.vue'
-export default {
-    name:'Exam',
-    components: {
-        TrainingStart
 
-    } 
+
+    import axios from 'axios'
+    import ExamLobby from '@/components/ExamLobby.vue'
+    import Counter from '@/components/Counter.vue'
+    import ExamStart from '@/components/ExamStart.vue'
+
+export default {
+
+    name:'Exam',
+    data() {
+        return {
+            isStart:false,
+            isStartExam:false,
+            text:'',
+
+        }
+    },
+    components: {
+        ExamLobby,
+        Counter,
+        ExamStart,
+
+    },
+    methods: {
+        repeat(){
+             this.isStart=true
+             this.isStartExam=false
+            this.fetchText()
+        },
+        startCounter() {
+            this.isStart=true
+             this.fetchText()
+        },
+        exam() {
+            this.isStartExam = true
+            
+            
+        },
+        async fetchText() {
+        try {
+          const response = await axios.get(`https://fish-text.ru/get?format=text&number=8`)
+          this.text = this.wrap(response.data.text)
+        } catch (error) {
+          alert('ошибка ', error)
+        }
+        },
+        wrap(text) {
+        const arr=text.split('')
+        let newArr=[]
+        for (let i=0; i<arr.length;i++) {
+          newArr.push(`<span>${arr[i]}</span>`)
+        }
+        newArr=newArr.join('')
+        return newArr
+      }
+    },
+    
+   
 }
 </script>
 
-<style scoped>
-li {
-    font-size: 1.3em;
-    list-style: none;
-}
+<style>
+
 </style>

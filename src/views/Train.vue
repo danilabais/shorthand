@@ -68,7 +68,6 @@ export default {
           newArr.push(`<span>${arr[i]}</span>`)
         }
         newArr=newArr.join('')
-        console.log(newArr)
         return {
           newArr,
           n,
